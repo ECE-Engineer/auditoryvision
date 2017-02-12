@@ -45,9 +45,4 @@ public class Translate {
             return "";
         }
     }
-
-    public static void main(String[] args) {
-        Translate test = new Translate("6d3c8cc1-672c-4b51-95b7-5eb8a208b099", "S6EJ6BaJFoI6");
-        System.out.println(test.convert("this is a test", Language.FRENCH));
-    }
 }
