@@ -1,5 +1,10 @@
 package auditoryvision;
 
+/**
+ * @author Kyle Zeller
+ */
+
+import com.ibm.watson.developer_cloud.language_translator.v2.model.Language;
 import com.ibm.watson.developer_cloud.text_to_speech.v1.TextToSpeech;
 import com.ibm.watson.developer_cloud.text_to_speech.v1.model.AudioFormat;
 import com.ibm.watson.developer_cloud.text_to_speech.v1.model.Voice;
@@ -17,12 +22,16 @@ public class TextSpeechApi {
         password = pass;
     }
 
-    public void speak(String soundPath, String text) {
+    public void speak(String soundPath, String text, Language destinationLanguage) {
         TextToSpeech service = new TextToSpeech();
         service.setUsernameAndPassword(username, password);
+
+        //translate
+        Translate test = new Translate(username, password);
+
         try {
             File file = new File(soundPath);
-            InputStream stream = service.synthesize(text, Voice.EN_ALLISON, AudioFormat.WAV).execute();
+            InputStream stream = service.synthesize(test.convert(text, destinationLanguage), Voice.EN_ALLISON, AudioFormat.WAV).execute();
             InputStream in = WaveUtils.reWriteWaveHeader(stream);
             OutputStream out = new FileOutputStream(file);
             byte[] buffer = new byte[1024];
